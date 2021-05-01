@@ -47,13 +47,15 @@ struct TaskManager {
     }
   }
 
-  func update(task: Task, title: String, impact: Int16, confidence: Int16, effort: Int16) {
+  func update(task: Task, title: String, impact: Int16, confidence: Int16, effort: Int16, completed: Bool) -> Task {
     self.assign(title: title, impact: impact, confidence: confidence, effort: effort, to: task)
+    task.completed = completed
     do {
       try context.save()
     } catch {
       print(error.localizedDescription)
     }
+    return task
   }
 
   func remove(tasks: [Task]) {

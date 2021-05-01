@@ -7,6 +7,7 @@ class Main: UIViewController {
   // MARK: - Properties
   let manager = TaskManager()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  var highestPriorityTask: Task?
   var tasks = [Task]() {
     didSet {
       for (index, element) in tasks.enumerated() {
@@ -15,15 +16,22 @@ class Main: UIViewController {
       }
       let count = tasks.count
       if count > 0 {
-        let highestPriorityTask = tasks[0]
-        jumbotronTitle.text = highestPriorityTask.title
-        jumbotronDateAdded.text = highestPriorityTask.dateAdded?.toString()
-        if highestPriorityTask.completed { jumbotronCompletedMark.image = UIImage(systemName: "checkmark.seal.fill") }
+        highestPriorityTask = tasks[0]
+        jumbotronTitle.text = highestPriorityTask?.title
+        jumbotronDateAdded.text = highestPriorityTask?.dateAdded?.toString()
+        jumbotronCompletedMark.image = highestPriorityTask!.completed ? UIImage(systemName: "checkmark.seal.fill") : UIImage(systemName: "checkmark.seal")
         emptyIllustration.isHidden = true
+        jumbotronCompletedMark.alpha = 1
+        jumbotronCompletedMark.isUserInteractionEnabled = true
+        jumbotronCompletedMark.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(completeTask)))
         tasksTable.isHidden = false
       } else {
         emptyIllustration.isHidden = false
         tasksTable.isHidden = true
+        jumbotronCompletedMark.alpha = 0
+        jumbotronCompletedMark.isUserInteractionEnabled = false
+        jumbotronTitle.text = "Hi there,"
+        jumbotronDateAdded.text = "You currently have no tasks."
       }
       if count < 5 { tableHeight.constant = CGFloat(count * 87) }
       tasksTable.reloadData()
@@ -86,6 +94,13 @@ class Main: UIViewController {
       let keyboardRectangle = keyboardFrame.cgRectValue
       let keyboardHeight = keyboardRectangle.height
       scrollX(offset: keyboardHeight)
+    }
+  }
+
+  @objc func completeTask(_ sender: Any? = nil) {
+    if let task = highestPriorityTask {
+      highestPriorityTask = manager.update(task: task, title: task.title!, impact: task.impact, confidence: task.confidence, effort: task.effort, completed: !task.completed)
+    tasks = manager.fetch()
     }
   }
 
@@ -163,6 +178,8 @@ extension Main: UITableViewDelegate, UITableViewDataSource {
     let cell = tasksTable.dequeueReusableCell(withIdentifier: "taskCell") as! TaskCell
     let task = tasks[indexPath.row]
 
+    cell.task = task
+    cell.delegate = self
     cell.titleLabel.text = task.title
     cell.dateAddedLabel.text = task.dateAdded?.toString()
     if task.completed { cell.completedImage.image = UIImage(systemName: "checkmark.seal.fill") }

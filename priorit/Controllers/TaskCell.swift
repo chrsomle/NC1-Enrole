@@ -2,7 +2,12 @@ import UIKit
 
 class TaskCell: UITableViewCell {
 
-
+  var delegate: Main!
+  var task: Task! {
+    didSet {
+      self.layoutSubviews()
+    }
+  }
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var dateAddedLabel: UILabel!
   @IBOutlet weak var completedImage: UIImageView!
@@ -15,8 +20,15 @@ class TaskCell: UITableViewCell {
 
   override func layoutSubviews() {
     super.layoutSubviews()
-//    contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0))
     cellContent.layer.cornerRadius = 8
+    completedImage.image = task.completed ? UIImage(systemName: "checkmark.seal.fill") : UIImage(systemName: "checkmark.seal")
+    completedImage.isUserInteractionEnabled = true
+    completedImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(completeTask)))
+  }
+
+  @objc func completeTask() {
+    task = delegate.manager.update(task: task, title: task.title!, impact: task.impact, confidence: task.confidence, effort: task.effort, completed: !task.completed)
+    delegate.tasks = delegate.manager.fetch()
   }
 
   override func setSelected(_ selected: Bool, animated: Bool) {
