@@ -19,6 +19,7 @@
 		83A27F6F263BFB91000867EB /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A27F6E263BFB91000867EB /* TaskManager.swift */; };
 		83A27F77263C3EC4000867EB /* DebugHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A27F76263C3EC4000867EB /* DebugHelper.swift */; };
 		83B937F1263AD31B00B26E80 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B937F0263AD31B00B26E80 /* Config.swift */; };
+		83D91F39263DC690009B19E3 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D91F38263DC690009B19E3 /* TaskList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		83A27F6E263BFB91000867EB /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		83A27F76263C3EC4000867EB /* DebugHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugHelper.swift; sourceTree = "<group>"; };
 		83B937F0263AD31B00B26E80 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		83D91F38263DC690009B19E3 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				833F93FC2637E36E007CB470 /* Main.swift */,
 				834CAD96263C875400D0835B /* TaskCell.swift */,
 				83A27F6E263BFB91000867EB /* TaskManager.swift */,
+				83D91F38263DC690009B19E3 /* TaskList.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				833F94032637E36E007CB470 /* priorit.xcdatamodeld in Sources */,
 				833F93F92637E36E007CB470 /* AppDelegate.swift in Sources */,
 				833F93FB2637E36E007CB470 /* SceneDelegate.swift in Sources */,
+				83D91F39263DC690009B19E3 /* TaskList.swift in Sources */,
 				83A27F6F263BFB91000867EB /* TaskManager.swift in Sources */,
 				834CAD97263C875400D0835B /* TaskCell.swift in Sources */,
 				83B937F1263AD31B00B26E80 /* Config.swift in Sources */,

@@ -2,20 +2,20 @@ import UIKit
 import CoreData
 import NotificationCenter
 
-class Main: UIViewController {
-
+class Main: UIViewController, TaskCellDelegate {
   // MARK: - Properties
   let manager = TaskManager()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   var highestPriorityTask: Task?
   var tasks = [Task]() {
     didSet {
-      for (index, element) in tasks.enumerated() {
-        print("\(index): ", terminator: "")
-        phrase(task: element)
-      }
+//      for (index, element) in tasks.enumerated() {
+//        print("\(index): ", terminator: "")
+//        phrase(task: element)
+//      }
       let count = tasks.count
       if count > 0 {
+        seeMoreButton.isHidden = false
         highestPriorityTask = tasks[0]
         jumbotronTitle.text = highestPriorityTask?.title
         jumbotronDateAdded.text = highestPriorityTask?.dateAdded?.toString()
@@ -26,14 +26,15 @@ class Main: UIViewController {
         jumbotronCompletedMark.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(completeTask)))
         tasksTable.isHidden = false
       } else {
+        seeMoreButton.isHidden = true
         emptyIllustration.isHidden = false
         tasksTable.isHidden = true
         jumbotronCompletedMark.alpha = 0
         jumbotronCompletedMark.isUserInteractionEnabled = false
-        jumbotronTitle.text = "Hi there,"
+        jumbotronTitle.text = "Hi there!"
         jumbotronDateAdded.text = "You currently have no tasks."
       }
-      if count < 5 { tableHeight.constant = CGFloat(count * 87) }
+      if count < 5 { tableHeight.constant = count < 4 ? CGFloat(3 * 87) : CGFloat(count * 87) }
       tasksTable.reloadData()
     }
   }
@@ -49,6 +50,7 @@ class Main: UIViewController {
   @IBOutlet weak var emptyIllustration: UIStackView!
   @IBOutlet weak var tasksTable: UITableView!
   @IBOutlet weak var contentStackView: UIStackView!
+  @IBOutlet weak var seeMoreButton: UIButton!
 
   // Highest Priority Task
   @IBOutlet weak var jumbotron: UIStackView!
@@ -80,8 +82,18 @@ class Main: UIViewController {
     tasksTable.delegate = self
     tasksTable.dataSource = self
     tasksTable.tableFooterView = UIView(frame: .zero)
-
+    let layer = CALayer()
+    layer.frame = jumbotron.bounds
+    layer.contents = UIImage(named: "Mountain")?.cgImage
+    layer.position = CGPoint(x:jumbotron.bounds.midX, y:jumbotron.bounds.midY + 20)
+    jumbotron.layer.masksToBounds = true
+    jumbotron.layer.addSublayer(layer)
+    jumbotron.backgroundColor = UIColor(hue: 42/360, saturation: 80/100, brightness: 100/100, alpha: 1)
     design()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    tasks = manager.fetch()
   }
 
   func scrollX(offset: CGFloat = 0) {
@@ -131,8 +143,20 @@ class Main: UIViewController {
       manager.add(title: title, impact: i, confidence: c, effort: e)
       tasks = manager.fetch()
       titleTextField.text = ""
+      scrollX()
+      seeMore(self)
+    } else {
+      let alert = UIAlertController(title: "Alert", message: "Please provide a name for the task.", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in self.dismiss(animated: true) }))
+      self.present(alert, animated: true)
     }
   }
+
+  @IBAction func seeMore(_ sender: Any) {
+    let taskList = storyboard?.instantiateViewController(identifier: "taskList") as! TaskList
+    self.present(taskList, animated: true)
+  }
+
 }
 
 extension Main: UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -188,12 +212,13 @@ extension Main: UITableViewDelegate, UITableViewDataSource {
     return cell
   }
 
-  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
-      self.manager.remove(tasks: [tasks[indexPath.row]])
-      self.tasks = self.manager.fetch()
-    }
-    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
-    return UISwipeActionsConfiguration(actions: [removeAction])
-  }
+// Debugging Purpose – Remove Item
+//  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
+//      self.manager.remove(tasks: [tasks[indexPath.row]])
+//      self.tasks = self.manager.fetch()
+//    }
+//    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
+//    return UISwipeActionsConfiguration(actions: [removeAction])
+//  }
 }

@@ -1,8 +1,13 @@
 import UIKit
 
+protocol TaskCellDelegate {
+  var tasks: [Task] { get set }
+  var manager: TaskManager { get }
+}
+
 class TaskCell: UITableViewCell {
 
-  var delegate: Main!
+  var delegate: TaskCellDelegate!
   var task: Task! {
     didSet {
       self.layoutSubviews()
