@@ -13,27 +13,40 @@ class Main: UIViewController {
         print("\(index): ", terminator: "")
         phrase(task: element)
       }
-      if tasks.count > 0 {
+      let count = tasks.count
+      if count > 0 {
+        let highestPriorityTask = tasks[0]
+        jumbotronTitle.text = highestPriorityTask.title
+        jumbotronDateAdded.text = highestPriorityTask.dateAdded?.toString()
+        if highestPriorityTask.completed { jumbotronCompletedMark.image = UIImage(systemName: "checkmark.seal.fill") }
         emptyIllustration.isHidden = true
         tasksTable.isHidden = false
       } else {
         emptyIllustration.isHidden = false
         tasksTable.isHidden = true
       }
+      if count < 5 { tableHeight.constant = CGFloat(count * 87) }
       tasksTable.reloadData()
     }
   }
   lazy var priorityPicker = UIPickerView()
 
   // MARK: - Outlets
+  @IBOutlet weak var tableHeight: NSLayoutConstraint!
   @IBOutlet weak var titleTextField: TextField!
   @IBOutlet weak var addTaskButton: UIButton!
-  @IBOutlet weak var jumbotron: UIStackView!
   @IBOutlet weak var scrollView: UIScrollView!
   @IBOutlet var priorities: [UITextField]!
   @IBOutlet var priorityPickers: [UIStackView]!
   @IBOutlet weak var emptyIllustration: UIStackView!
   @IBOutlet weak var tasksTable: UITableView!
+  @IBOutlet weak var contentStackView: UIStackView!
+
+  // Highest Priority Task
+  @IBOutlet weak var jumbotron: UIStackView!
+  @IBOutlet weak var jumbotronTitle: UILabel!
+  @IBOutlet weak var jumbotronDateAdded: UILabel!
+  @IBOutlet weak var jumbotronCompletedMark: UIImageView!
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .darkContent
@@ -42,7 +55,7 @@ class Main: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    manager.drop()
+//    manager.drop()
 
     // Setups
     setupTitleTextField()
@@ -64,7 +77,8 @@ class Main: UIViewController {
   }
 
   func scrollX(offset: CGFloat = 0) {
-    scrollView.setContentOffset(CGPoint(x: 0, y: offset == 0 ? 0 : offset - 48), animated: true)
+    let y = offset - (view.frame.height - contentStackView.frame.height) + 48
+    scrollView.setContentOffset(CGPoint(x: 0, y: offset == 0 ? 0 : y), animated: true)
   }
 
   @objc func keyboardWillShow(_ notification: Notification) {
@@ -152,7 +166,17 @@ extension Main: UITableViewDelegate, UITableViewDataSource {
     cell.titleLabel.text = task.title
     cell.dateAddedLabel.text = task.dateAdded?.toString()
     if task.completed { cell.completedImage.image = UIImage(systemName: "checkmark.seal.fill") }
-
+    let alpha = 1.2 - (CGFloat(indexPath.row + 1) / 5)
+    cell.cellContent.backgroundColor = UIColor(hue: 42/360, saturation: 80/100, brightness: 100/100, alpha: alpha)
     return cell
+  }
+
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
+      self.manager.remove(tasks: [tasks[indexPath.row]])
+      self.tasks = self.manager.fetch()
+    }
+    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
+    return UISwipeActionsConfiguration(actions: [removeAction])
   }
 }

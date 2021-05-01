@@ -60,8 +60,9 @@ extension String {
 extension Date {
   func toString() -> String {
     let formatter = DateFormatter()
-    formatter.timeStyle = .medium
-    formatter.dateStyle = .medium
-    return "Added on \(formatter.string(from: self))"
+    formatter.dateFormat = "EEE MMM dd – HH:mm"
+//    formatter.timeStyle = .medium
+//    formatter.dateStyle = .medium
+    return "Created at \(formatter.string(from: self))"
   }
 }
