@@ -16,18 +16,14 @@ class Info: UIViewController {
     super.viewDidLoad()
 
     contentView.layer.cornerRadius = 12
-    cards.forEach { $0.layer.cornerRadius = 8 }
+    cards.forEach {
+      $0.layer.cornerRadius = 8
+      $0.backgroundColor = UIColor.Palette.primary
+    }
   }
 
-
-  /*
-   // MARK: - Navigation
-
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destination.
-   // Pass the selected object to the new view controller.
-   }
-   */
+  @IBAction func dismiss(_ sender: Any) {
+    self.dismiss(animated: true)
+  }
 
 }

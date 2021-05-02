@@ -66,3 +66,20 @@ extension Date {
     return "Added on \(formatter.string(from: self))"
   }
 }
+
+extension UIColor {
+  struct Palette {
+    static var primary: UIColor {
+      UIColor(hue: 42/360,
+              saturation: 80/100,
+              brightness: 100/100,
+              alpha: 1)
+    }
+    static var destructive: UIColor {
+      UIColor(hue: 346/360,
+              saturation: 70/100,
+              brightness: 94/100,
+              alpha: 1)
+    }
+  }
+}

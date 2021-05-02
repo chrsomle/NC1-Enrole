@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,29 +20,41 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qkc-NF-FRn">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1141"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1148.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nZn-9m-iJy">
-                                                <rect key="frame" x="24" y="12" width="366" height="20"/>
+                                                <rect key="frame" x="24" y="12" width="366" height="22"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="hqF-uJ-ZG0">
-                                                        <rect key="frame" x="4" y="2" width="65" height="16"/>
+                                                        <rect key="frame" x="4" y="3" width="65" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="WLK-ZY-bzN"/>
                                                             <constraint firstAttribute="width" secondItem="hqF-uJ-ZG0" secondAttribute="height" multiplier="61:15" id="YBm-EH-cMg"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tEe-Cu-yti">
-                                                        <rect key="frame" x="342" y="0.0" width="20" height="20"/>
-                                                        <connections>
-                                                            <segue destination="XE1-k2-61C" kind="show" id="650-VT-l03"/>
-                                                        </connections>
-                                                    </button>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="485-eG-RD6">
+                                                        <rect key="frame" x="306.5" y="0.0" width="55.5" height="22"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2hP-l9-1zw">
+                                                                <rect key="frame" x="0.0" y="0.0" width="19.5" height="22"/>
+                                                                <state key="normal" image="trash" catalog="system"/>
+                                                                <connections>
+                                                                    <segue destination="0nV-99-GCR" kind="show" identifier="dump" id="wmy-5A-iTd"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tEe-Cu-yti">
+                                                                <rect key="frame" x="35.5" y="0.0" width="20" height="22"/>
+                                                                <connections>
+                                                                    <segue destination="XE1-k2-61C" kind="show" id="ouG-w2-Pwn"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                                 <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="4" bottom="0.0" trailing="4"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Qw-9I-zSD" userLabel="Jumbotron">
-                                                <rect key="frame" x="24" y="48" width="366" height="97.5"/>
+                                                <rect key="frame" x="24" y="50" width="366" height="97.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="↯ Task With The Highest Priority" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Boz-Vp-DDY">
                                                         <rect key="frame" x="16" y="16" width="334" height="17"/>
@@ -81,7 +94,7 @@
                                                 <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="16" bottom="16" trailing="16"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Sku-Uc-Q1h" userLabel="Tasks">
-                                                <rect key="frame" x="24" y="161.5" width="366" height="744"/>
+                                                <rect key="frame" x="24" y="163.5" width="366" height="749.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Esw-u3-a7U" userLabel="Upcoming Tasks">
                                                         <rect key="frame" x="0.0" y="0.0" width="366" height="30"/>
@@ -104,16 +117,16 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="MK5-XK-Y27" userLabel="Blank">
-                                                        <rect key="frame" x="0.0" y="46" width="366" height="334"/>
+                                                        <rect key="frame" x="0.0" y="46" width="366" height="339.5"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blank" translatesAutoresizingMaskIntoConstraints="NO" id="SmY-gq-rBC" userLabel="illustration">
-                                                                <rect key="frame" x="8" y="16" width="358" height="246"/>
+                                                                <rect key="frame" x="0.0" y="16" width="366" height="251.5"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="SmY-gq-rBC" secondAttribute="height" multiplier="4:2.75" id="VHD-X1-wPq"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <stackView opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UV0-C3-K9h">
-                                                                <rect key="frame" x="8" y="270" width="358" height="48"/>
+                                                                <rect key="frame" x="0.0" y="275.5" width="366" height="48"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus.rectangle.on.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="GkY-sB-owd">
                                                                         <rect key="frame" x="32" y="8.5" width="32" height="31.5"/>
@@ -123,7 +136,7 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You currently have no more tasks; please complete the form below to add any." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="a0c-JG-A6A">
-                                                                        <rect key="frame" x="72" y="8" width="254" height="32"/>
+                                                                        <rect key="frame" x="72" y="8" width="262" height="32"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                         <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                         <nil key="highlightedColor"/>
@@ -133,10 +146,10 @@
                                                                 <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="32" bottom="8" trailing="32"/>
                                                             </stackView>
                                                         </subviews>
-                                                        <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="8" bottom="16" trailing="0.0"/>
+                                                        <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="0.0" bottom="16" trailing="0.0"/>
                                                     </stackView>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="1" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oCY-OM-G33">
-                                                        <rect key="frame" x="0.0" y="396" width="366" height="348"/>
+                                                        <rect key="frame" x="0.0" y="401.5" width="366" height="348"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <constraints>
@@ -215,7 +228,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="cCX-Kn-EGK" userLabel="Add Task">
-                                                <rect key="frame" x="24" y="921.5" width="366" height="195.5"/>
+                                                <rect key="frame" x="24" y="929" width="366" height="195.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🗒 What are your plans for today?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Swn-X2-GW7">
                                                         <rect key="frame" x="0.0" y="0.0" width="366" height="22.5"/>
@@ -526,18 +539,111 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GMX-Pn-4kK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="985.50724637681162" y="113.83928571428571"/>
+            <point key="canvasLocation" x="-725" y="114"/>
+        </scene>
+        <!--Dump-->
+        <scene sceneID="gea-X4-eB1">
+            <objects>
+                <viewController storyboardIdentifier="dump" title="Dump" id="0nV-99-GCR" customClass="Dump" customModule="priorit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4G8-EZ-uhg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Aeu-7I-8f8">
+                                <rect key="frame" x="48" y="304" width="318" height="234"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bIf-kF-0l3">
+                                        <rect key="frame" x="16" y="16" width="286" height="36"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="eDZ-xk-ABF">
+                                                <rect key="frame" x="8" y="8" width="270" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="16" id="VPJ-1U-VZp"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="12" trailing="8"/>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rew-Dh-Rv4">
+                                        <rect key="frame" x="16" y="64" width="286" height="44.5"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                        <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Dump Completed Tasks" image="trash.fill" catalog="system">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismiss:" destination="XE1-k2-61C" eventType="touchUpInside" id="AGj-1T-sQu"/>
+                                            <action selector="dumpCompleted:" destination="0nV-99-GCR" eventType="touchUpInside" id="GvQ-Fu-LLH"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCG-Tf-07U">
+                                        <rect key="frame" x="16" y="120.5" width="286" height="44.5"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                        <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Dump All Tasks" image="trash.fill" catalog="system">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismiss:" destination="XE1-k2-61C" eventType="touchUpInside" id="ij8-Y4-sVP"/>
+                                            <action selector="dumpAll:" destination="0nV-99-GCR" eventType="touchUpInside" id="dFF-EL-Mbl"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVA-in-bGO">
+                                        <rect key="frame" x="16" y="177" width="286" height="41"/>
+                                        <color key="backgroundColor" red="0.93999999999999995" green="0.93999999999999995" blue="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="tintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <inset key="contentEdgeInsets" minX="8" minY="12" maxX="8" maxY="12"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismiss:" destination="XE1-k2-61C" eventType="touchUpInside" id="Hc4-rD-Zbz"/>
+                                            <action selector="dismiss:" destination="0nV-99-GCR" eventType="touchUpInside" id="ilS-w4-nmu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="16" bottom="16" trailing="16"/>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="0a6-i1-Fjh"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Aeu-7I-8f8" secondAttribute="trailing" constant="48" id="0pT-E8-aas"/>
+                            <constraint firstItem="Aeu-7I-8f8" firstAttribute="centerY" secondItem="4G8-EZ-uhg" secondAttribute="centerY" id="WDt-4B-fFu"/>
+                            <constraint firstItem="Aeu-7I-8f8" firstAttribute="leading" secondItem="0a6-i1-Fjh" secondAttribute="leading" constant="48" id="Xhv-AE-piS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="7RS-dq-0j8"/>
+                    <connections>
+                        <outlet property="contentView" destination="Aeu-7I-8f8" id="Egn-qI-t1H"/>
+                        <outletCollection property="buttons" destination="Rew-Dh-Rv4" collectionClass="NSMutableArray" id="NIC-dS-Eld"/>
+                        <outletCollection property="buttons" destination="JCG-Tf-07U" collectionClass="NSMutableArray" id="rcv-v7-bpy"/>
+                        <outletCollection property="buttons" destination="iVA-in-bGO" collectionClass="NSMutableArray" id="cgL-yf-sc9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nqL-cp-k4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-301.44927536231887" y="925.44642857142856"/>
         </scene>
         <!--Info-->
         <scene sceneID="LC6-fb-4fn">
             <objects>
-                <viewController title="Info" id="XE1-k2-61C" customClass="Info" customModule="priorit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="info" title="Info" id="XE1-k2-61C" customClass="Info" customModule="priorit" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h6D-eG-lzg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="3s9-Cn-thw">
-                                <rect key="frame" x="48" y="224" width="318" height="394.5"/>
+                                <rect key="frame" x="48" y="201" width="318" height="440.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="TlY-8r-YZC">
                                         <rect key="frame" x="16" y="16" width="286" height="16"/>
@@ -561,7 +667,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="0.76078431369999999" blue="0.20000000000000001" alpha="0.68999999999999995" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.93999999999999995" green="0.93999999999999995" blue="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="16" bottom="16" trailing="16"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7zQ-PS-qwg">
@@ -580,7 +686,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="0.76078431369999999" blue="0.20000000000000001" alpha="0.68999999999999995" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.93999999999999995" green="0.93999999999999995" blue="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="16" bottom="16" trailing="16"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="xbZ-ZA-P6m">
@@ -599,9 +705,22 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="0.76078431369999999" blue="0.20000000000000001" alpha="0.68999999999999995" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.93999999999999995" green="0.93999999999999995" blue="0.93999999999999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="16" bottom="16" trailing="16"/>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QQm-eb-flY">
+                                        <rect key="frame" x="16" y="394.5" width="286" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                        <state key="normal" image="xmark.circle.fill" catalog="system">
+                                            <color key="titleColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismiss:" destination="XE1-k2-61C" eventType="touchUpInside" id="Vyt-aJ-yiy"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="16" bottom="16" trailing="16"/>
@@ -625,7 +744,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6y-nh-Cva" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1809" y="114"/>
+            <point key="canvasLocation" x="751" y="925"/>
         </scene>
     </scenes>
     <resources>
@@ -635,5 +754,11 @@
         <image name="chevron.up.chevron.down" catalog="system" width="128" height="128"/>
         <image name="logo" width="425" height="90"/>
         <image name="plus.rectangle.on.rectangle" catalog="system" width="128" height="96"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
+        <image name="trash.fill" catalog="system" width="121" height="128"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

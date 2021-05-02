@@ -3,9 +3,13 @@ import CoreData
 import NotificationCenter
 
 class Main: UIViewController, TaskCellDelegate {
+
   // MARK: - Properties
   let manager = TaskManager()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  lazy var priorityPicker = UIPickerView()
+
+  // Computed Properties
   var highestPriorityTask: Task? {
     didSet {
       if let task = highestPriorityTask {
@@ -25,11 +29,6 @@ class Main: UIViewController, TaskCellDelegate {
 
     }
   }
-
-  func getImage(_ isCompleted: Bool) -> UIImage {
-    return isCompleted ? UIImage(systemName: "checkmark.seal.fill")! : UIImage(systemName: "checkmark.seal")!
-  }
-
   var tasks = [Task]() {
     didSet {
       if tasks.count > 0 {
@@ -68,26 +67,17 @@ class Main: UIViewController, TaskCellDelegate {
 
         // Show Greetings
         jumbotronTitle.text = "👀 Hi there!"
-        jumbotronDateAdded.text = "You currently have no tasks."
+        jumbotronDateAdded.text = "You currently have no unfinished tasks."
       }
 
       tasksTable.reloadData()
     }
   }
 
-  lazy var priorityPicker = UIPickerView()
-
   // MARK: - Outlets
   @IBOutlet weak var tableHeight: NSLayoutConstraint!
-  @IBOutlet weak var titleTextField: TextField!
-  @IBOutlet weak var addTaskButton: UIButton!
   @IBOutlet weak var scrollView: UIScrollView!
-  @IBOutlet var priorities: [UITextField]!
-  @IBOutlet var priorityPickers: [UIStackView]!
-  @IBOutlet weak var emptyIllustration: UIStackView!
-  @IBOutlet weak var tasksTable: UITableView!
   @IBOutlet weak var contentStackView: UIStackView!
-  @IBOutlet weak var seeMoreButton: UIButton!
 
   // Highest Priority Task
   @IBOutlet weak var jumbotron: UIStackView!
@@ -95,14 +85,24 @@ class Main: UIViewController, TaskCellDelegate {
   @IBOutlet weak var jumbotronDateAdded: UILabel!
   @IBOutlet weak var jumbotronCompletedMark: UIImageView!
 
+  // Next Prioritized Tasks List
+  @IBOutlet weak var seeMoreButton: UIButton!
+  @IBOutlet weak var emptyIllustration: UIStackView!
+  @IBOutlet weak var tasksTable: UITableView!
+
+  // Add Task
+  @IBOutlet weak var titleTextField: TextField!
+  @IBOutlet var priorities: [UITextField]!
+  @IBOutlet var priorityPickers: [UIStackView]!
+  @IBOutlet weak var addTaskButton: UIButton!
+
+  // MARK: - Overrides
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .darkContent
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    manager.drop()
 
     // Setups
     setupTitleTextField()
@@ -136,6 +136,19 @@ class Main: UIViewController, TaskCellDelegate {
     scrollX()
   }
 
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "dump" {
+      if let destination = segue.destination as? Dump {
+        destination.delegate = self
+      }
+    }
+  }
+
+  // MARK: - Methods
+  func getImage(_ isCompleted: Bool) -> UIImage {
+    return isCompleted ? UIImage(systemName: "checkmark.seal.fill")! : UIImage(systemName: "checkmark.seal")!
+  }
+
   func scrollX(offset: CGFloat = 0) {
     let y = offset - (view.frame.height - contentStackView.frame.height) + 48
     scrollView.setContentOffset(CGPoint(x: 0, y: offset == 0 ? 0 : y), animated: true)
@@ -157,7 +170,7 @@ class Main: UIViewController, TaskCellDelegate {
   }
 
   func setupObservers() {
-    // 1. Keyboard Observer
+    // Keyboard Observer
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
   }
 
@@ -171,6 +184,7 @@ class Main: UIViewController, TaskCellDelegate {
     priorityPickers.forEach { $0.layer.cornerRadius = 4 }
   }
 
+  // MARK: - Actions
   @IBAction func addTaskTapped(_ sender: Any) {
     if let title = titleTextField.text,
        title.count > 0,
@@ -205,6 +219,8 @@ class Main: UIViewController, TaskCellDelegate {
   }
 
 }
+
+// MARK: - Extension
 
 extension Main: UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -260,12 +276,12 @@ extension Main: UITableViewDelegate, UITableViewDataSource {
   }
 
   // Debugging Purpose – Remove Item
-  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
-      self.manager.remove(tasks: [tasks[indexPath.row]])
-      self.tasks = self.manager.fetch()
-    }
-    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
-    return UISwipeActionsConfiguration(actions: [removeAction])
-  }
+  //  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+  //    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
+  //      self.manager.remove(tasks: [tasks[indexPath.row]])
+  //      self.tasks = self.manager.fetch()
+  //    }
+  //    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
+  //    return UISwipeActionsConfiguration(actions: [removeAction])
+  //  }
 }
