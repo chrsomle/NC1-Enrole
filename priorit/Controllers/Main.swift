@@ -6,38 +6,75 @@ class Main: UIViewController, TaskCellDelegate {
   // MARK: - Properties
   let manager = TaskManager()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-  var highestPriorityTask: Task?
-  var tasks = [Task]() {
+  var highestPriorityTask: Task? {
     didSet {
-//      for (index, element) in tasks.enumerated() {
-//        print("\(index): ", terminator: "")
-//        phrase(task: element)
-//      }
-      let count = tasks.count
-      if count > 0 {
-        seeMoreButton.isHidden = false
-        highestPriorityTask = tasks[0]
-        jumbotronTitle.text = highestPriorityTask?.title
-        jumbotronDateAdded.text = highestPriorityTask?.dateAdded?.toString()
-        jumbotronCompletedMark.image = highestPriorityTask!.completed ? UIImage(systemName: "checkmark.seal.fill") : UIImage(systemName: "checkmark.seal")
-        emptyIllustration.isHidden = true
+      if let task = highestPriorityTask {
+        // Setup Task Title and Date
+        if let title = task.title,
+           let dateAdded = task.dateAdded {
+          jumbotronTitle.text = title
+          jumbotronDateAdded.text = dateAdded.toString()
+        }
+
+        // Configure Completed Mark
+        jumbotronCompletedMark.image = getImage(task.completed)
         jumbotronCompletedMark.alpha = 1
         jumbotronCompletedMark.isUserInteractionEnabled = true
         jumbotronCompletedMark.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(completeTask)))
-        tasksTable.isHidden = false
+      }
+
+    }
+  }
+
+  func getImage(_ isCompleted: Bool) -> UIImage {
+    return isCompleted ? UIImage(systemName: "checkmark.seal.fill")! : UIImage(systemName: "checkmark.seal")!
+  }
+
+  var tasks = [Task]() {
+    didSet {
+      if tasks.count > 0 {
+
+        if tasks.count > 1 {
+          // Toggle On Prioritized Tasks Table View
+          emptyIllustration.isHidden = true
+          tasksTable.isHidden = false
+        } else {
+          // Toggle Off Prioritized Tasks Table View
+          emptyIllustration.isHidden = false
+          tasksTable.isHidden = true
+        }
+
+        // Show "See More" Button
+        seeMoreButton.isHidden = false
+
+        // Assign Highest Priority Task
+        highestPriorityTask = tasks.removeFirst()
+
+        // Set Prioritized Tasks Table Height
+        let count = tasks.count
+        let cellHeight = 87
+        if count < 5 { tableHeight.constant = count < 4 ? emptyIllustration.frame.height : CGFloat(count * cellHeight) - 10 }
       } else {
-        seeMoreButton.isHidden = true
+        // Toggle Off Prioritized Tasks Table View
         emptyIllustration.isHidden = false
         tasksTable.isHidden = true
+
+        // Hide "See More" Button
+        seeMoreButton.isHidden = true
+
+        // Hide The Completed Mark
         jumbotronCompletedMark.alpha = 0
         jumbotronCompletedMark.isUserInteractionEnabled = false
-        jumbotronTitle.text = "Hi there!"
+
+        // Show Greetings
+        jumbotronTitle.text = "👀 Hi there!"
         jumbotronDateAdded.text = "You currently have no tasks."
       }
-      if count < 5 { tableHeight.constant = count < 4 ? CGFloat(3 * 87) : CGFloat(count * 87) }
+
       tasksTable.reloadData()
     }
   }
+
   lazy var priorityPicker = UIPickerView()
 
   // MARK: - Outlets
@@ -65,7 +102,7 @@ class Main: UIViewController, TaskCellDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-//    manager.drop()
+    manager.drop()
 
     // Setups
     setupTitleTextField()
@@ -94,6 +131,9 @@ class Main: UIViewController, TaskCellDelegate {
 
   override func viewWillAppear(_ animated: Bool) {
     tasks = manager.fetch()
+
+    // When user directly adding task without dismissing their keyboard, when Task List is being dismissed, the scrolling before presenting Task List View Controller will persist. Hence, it's neccessary to "reset" the scrolling.
+    scrollX()
   }
 
   func scrollX(offset: CGFloat = 0) {
@@ -112,7 +152,7 @@ class Main: UIViewController, TaskCellDelegate {
   @objc func completeTask(_ sender: Any? = nil) {
     if let task = highestPriorityTask {
       highestPriorityTask = manager.update(task: task, title: task.title!, impact: task.impact, confidence: task.confidence, effort: task.effort, completed: !task.completed)
-    tasks = manager.fetch()
+      tasks = manager.fetch()
     }
   }
 
@@ -144,7 +184,14 @@ class Main: UIViewController, TaskCellDelegate {
       tasks = manager.fetch()
       titleTextField.text = ""
       scrollX()
-      seeMore(self)
+
+      // Dismiss Any Active Keyboard / Pickers
+      if tasks.count > 4 {
+        seeMore(self)
+      } else {
+        titleTextField.resignFirstResponder()
+        priorities.forEach { $0.resignFirstResponder() }
+      }
     } else {
       let alert = UIAlertController(title: "Alert", message: "Please provide a name for the task.", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in self.dismiss(animated: true) }))
@@ -212,13 +259,13 @@ extension Main: UITableViewDelegate, UITableViewDataSource {
     return cell
   }
 
-// Debugging Purpose – Remove Item
-//  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
-//      self.manager.remove(tasks: [tasks[indexPath.row]])
-//      self.tasks = self.manager.fetch()
-//    }
-//    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
-//    return UISwipeActionsConfiguration(actions: [removeAction])
-//  }
+  // Debugging Purpose – Remove Item
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
+      self.manager.remove(tasks: [tasks[indexPath.row]])
+      self.tasks = self.manager.fetch()
+    }
+    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
+    return UISwipeActionsConfiguration(actions: [removeAction])
+  }
 }

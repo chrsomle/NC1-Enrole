@@ -42,7 +42,7 @@ extension String {
     case "Near Zero":
       return 1
     case "Very Low":
-      return 2
+      return 3
     case "Low":
       return 4
     case "Medium":
@@ -60,9 +60,9 @@ extension String {
 extension Date {
   func toString() -> String {
     let formatter = DateFormatter()
-    formatter.dateFormat = "EEE MMM dd – HH:mm"
+    formatter.dateFormat = "EEE, dd MMM – HH:mm"
 //    formatter.timeStyle = .medium
 //    formatter.dateStyle = .medium
-    return "Created at \(formatter.string(from: self))"
+    return "Added on \(formatter.string(from: self))"
   }
 }

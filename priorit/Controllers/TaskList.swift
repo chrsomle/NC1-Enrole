@@ -19,6 +19,10 @@ class TaskList: UIViewController, TaskCellDelegate {
     tableView.tableFooterView = UIView(frame: .zero)
   }
 
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .darkContent
+  }
+
   /*
    // MARK: - Navigation
 
