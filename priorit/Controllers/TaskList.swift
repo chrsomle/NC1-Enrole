@@ -50,6 +50,7 @@ class TaskList: UIViewController, TaskCellDelegate {
 }
 
 extension TaskList: UITableViewDelegate, UITableViewDataSource {
+
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     tasks.count
   }
@@ -63,11 +64,14 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
 
     let gestures = UIPanGestureRecognizer(target: self, action: #selector(handleGestures))
     let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+    gestures.delegate = self
     cell.addGestureRecognizer(gestures)
     cell.addGestureRecognizer(tap)
 
-    let alpha = 1.2 - (CGFloat(indexPath.row) / CGFloat(tasks.count))
-    cell.cellContent.backgroundColor = UIColor(hue: 42/360, saturation: 80/100, brightness: 100/100, alpha: alpha)
+    //    let alpha = 1.2 - (CGFloat(indexPath.row) / CGFloat(tasks.count))
+    let modifier = CGFloat(indexPath.row) * 4
+    cell.cellContent.backgroundColor = UIColor(hue: (42 + modifier/4)/360, saturation: (80 - modifier)/100, brightness: 100/100, alpha: 1)
+
     return cell
   }
 
@@ -91,6 +95,7 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
   }
 
   @objc func handleGestures(_ sender: UIPanGestureRecognizer) {
+
     let location = sender.location(in: tableView)
     let translation = sender.translation(in: view)
 
@@ -128,6 +133,7 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
 
       case .ended:
         self.prevCell = cell as? TaskCell
+
       default:
         break
       }
@@ -135,4 +141,16 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
     }
   }
 
+}
+
+extension TaskList: UIGestureRecognizerDelegate {
+  func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    if let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer {
+      let translation = panGestureRecognizer.translation(in: tableView)
+      if abs(translation.x) > abs(translation.y) {
+        return true
+      }
+    }
+    return false
+  }
 }
