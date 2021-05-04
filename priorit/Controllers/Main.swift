@@ -136,14 +136,6 @@ class Main: UIViewController, TaskCellDelegate {
     scrollX()
   }
 
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "dump" {
-      if let destination = segue.destination as? Dump {
-        destination.delegate = self
-      }
-    }
-  }
-
   // MARK: - Methods
   func getImage(_ isCompleted: Bool) -> UIImage {
     return isCompleted ? UIImage(systemName: "checkmark.seal.fill")! : UIImage(systemName: "checkmark.seal")!
@@ -182,6 +174,13 @@ class Main: UIViewController, TaskCellDelegate {
   func design() {
     [addTaskButton, jumbotron].forEach { $0.layer.cornerRadius = 8 }
     priorityPickers.forEach { $0.layer.cornerRadius = 4 }
+    // Create a new Attributed String
+    let attributedString = NSMutableAttributedString.init(string: "see more")
+
+    // Add Underline Style Attribute.
+    attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range:
+        NSRange.init(location: 0, length: attributedString.length));
+    seeMoreButton.setAttributedTitle(attributedString, for: .normal)
   }
 
   // MARK: - Actions
