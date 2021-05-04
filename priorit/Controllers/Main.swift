@@ -44,7 +44,7 @@ class Main: UIViewController, TaskCellDelegate {
         }
 
         // Show "See More" Button
-        seeMoreButton.isHidden = false
+        seeMoreButton.alpha = 1
 
         // Assign Highest Priority Task
         highestPriorityTask = tasks.removeFirst()
@@ -59,7 +59,7 @@ class Main: UIViewController, TaskCellDelegate {
         tasksTable.isHidden = true
 
         // Hide "See More" Button
-        seeMoreButton.isHidden = true
+        seeMoreButton.alpha = 0
 
         // Hide The Completed Mark
         jumbotronCompletedMark.alpha = 0
@@ -108,7 +108,8 @@ class Main: UIViewController, TaskCellDelegate {
     setupTitleTextField()
     priorities.forEach {
       $0.inputView = priorityPicker
-      $0.text = intensity[3]
+      $0.text = intensity[2]
+      $0.superview?.backgroundColor = UIColor(hue: 44/360, saturation: 72/100, brightness: 100/100, alpha: 1)
     }
     setupObservers()
     tasks = manager.fetch()
@@ -125,7 +126,7 @@ class Main: UIViewController, TaskCellDelegate {
     layer.position = CGPoint(x:jumbotron.bounds.midX, y:jumbotron.bounds.midY + 20)
     jumbotron.layer.masksToBounds = true
     jumbotron.layer.addSublayer(layer)
-    jumbotron.backgroundColor = UIColor(hue: 42/360, saturation: 80/100, brightness: 100/100, alpha: 1)
+    jumbotron.backgroundColor = UIColor.Palette.primary
     design()
   }
 
@@ -239,8 +240,8 @@ extension Main: UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSourc
     priorities.forEach {
       if $0.isEditing {
         $0.text = intensity[row]
-        let alpha = CGFloat(row + 1) / 8 + 0.25
-        $0.superview?.backgroundColor = UIColor(hue: 42/360, saturation: 80/100, brightness: 100/100, alpha: alpha)
+        let modifier = CGFloat(row) * 4
+        $0.superview?.backgroundColor = UIColor(hue: (42 + modifier/4)/360, saturation: (80 - modifier)/100, brightness: 100/100, alpha: 1)
         $0.resignFirstResponder()
       }
     }
@@ -269,18 +270,18 @@ extension Main: UITableViewDelegate, UITableViewDataSource {
     cell.titleLabel.text = task.title
     cell.dateAddedLabel.text = task.dateAdded?.toString()
     if task.completed { cell.completedImage.image = UIImage(systemName: "checkmark.seal.fill") }
-    let alpha = 1.2 - (CGFloat(indexPath.row + 1) / 5)
-    cell.cellContent.backgroundColor = UIColor(hue: 42/360, saturation: 80/100, brightness: 100/100, alpha: alpha)
+    let modifier = CGFloat(indexPath.row) * 4
+    cell.cellContent.backgroundColor = UIColor(hue: (42 + modifier/4)/360, saturation: (80 - modifier)/100, brightness: 100/100, alpha: 1)
     return cell
   }
 
   // Debugging Purpose – Remove Item
-  //  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-  //    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
-  //      self.manager.remove(tasks: [tasks[indexPath.row]])
-  //      self.tasks = self.manager.fetch()
-  //    }
-  //    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
-  //    return UISwipeActionsConfiguration(actions: [removeAction])
-  //  }
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//      let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
+//        self.manager.remove(tasks: [tasks[indexPath.row]])
+//        self.tasks = self.manager.fetch()
+//      }
+//      let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
+//      return UISwipeActionsConfiguration(actions: [removeAction])
+//    }
 }

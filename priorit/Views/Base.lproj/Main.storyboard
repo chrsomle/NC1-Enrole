@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qkc-NF-FRn">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1146.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1144"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nZn-9m-iJy">
                                                 <rect key="frame" x="24" y="12" width="366" height="20"/>
@@ -86,12 +86,20 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Esw-u3-a7U" userLabel="Upcoming Tasks">
                                                         <rect key="frame" x="0.0" y="0.0" width="366" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="📌 Next Prioritized Tasks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdG-uc-qok">
-                                                                <rect key="frame" x="0.0" y="0.0" width="170" height="30"/>
-                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="eDi-cs-9Vr">
+                                                                <rect key="frame" x="0.0" y="0.0" width="170.5" height="30"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Moz-kp-F6U">
+                                                                        <rect key="frame" x="0.0" y="-0.5" width="20" height="31.5"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Prioritized Tasks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdG-uc-qok">
+                                                                        <rect key="frame" x="24" y="0.0" width="146.5" height="30"/>
+                                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0I-PF-HtC">
                                                                 <rect key="frame" x="302" y="0.0" width="64" height="30"/>
                                                                 <state key="normal" title="see more">
@@ -215,28 +223,36 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="cCX-Kn-EGK" userLabel="Add Task">
-                                                <rect key="frame" x="24" y="927" width="366" height="195.5"/>
+                                                <rect key="frame" x="24" y="927" width="366" height="193"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🗒 What are your plans for today?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Swn-X2-GW7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="366" height="22.5"/>
-                                                        <fontDescription key="fontDescription" name="GeezaPro-Bold" family="Geeza Pro" pointSize="18"/>
-                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="w3N-eY-Alp">
+                                                        <rect key="frame" x="0.0" y="0.0" width="366" height="20"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="list.triangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vuJ-QD-EEF">
+                                                                <rect key="frame" x="0.0" y="2.5" width="33.5" height="15"/>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" What are your plans for today?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Swn-X2-GW7">
+                                                                <rect key="frame" x="33.5" y="0.0" width="332.5" height="20"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
                                                     <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Learn Color Theory" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s9d-Kg-LUF" customClass="TextField" customModule="priorit" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="34.5" width="366" height="34"/>
+                                                        <rect key="frame" x="0.0" y="32" width="366" height="34"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="continue"/>
                                                     </textField>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="dqo-0j-gJD" userLabel="ICE">
-                                                        <rect key="frame" x="0.0" y="80.5" width="366" height="54"/>
+                                                        <rect key="frame" x="0.0" y="78" width="366" height="54"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="iie-FX-ybV" userLabel="Impact">
                                                                 <rect key="frame" x="0.0" y="0.0" width="114" height="54"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Impact" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05d-gq-8Jv">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Importance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05d-gq-8Jv">
                                                                         <rect key="frame" x="0.0" y="0.0" width="114" height="17"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -350,7 +366,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfh-Ss-IQE">
-                                                        <rect key="frame" x="0.0" y="146.5" width="366" height="49"/>
+                                                        <rect key="frame" x="0.0" y="144" width="366" height="49"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                         <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
@@ -563,13 +579,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="CaC-fb-6DV">
                                         <rect key="frame" x="16" y="48" width="286" height="99.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Impact" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffi-ei-DaV">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Importance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffi-ei-DaV">
                                                 <rect key="frame" x="16" y="16" width="254" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To determine the size of the impact, consider how much the task contributes to your overall goal." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kjV-Jg-1GO">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To determine the size of the importance, consider how much the task contributes to your overall goal." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kjV-Jg-1GO">
                                                 <rect key="frame" x="16" y="37" width="254" height="46.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                 <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -661,7 +677,9 @@
         <image name="checkmark.seal" catalog="system" width="128" height="128"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.up.chevron.down" catalog="system" width="128" height="128"/>
+        <image name="list.triangle" catalog="system" width="128" height="91"/>
         <image name="logo" width="425" height="90"/>
+        <image name="pin" catalog="system" width="119" height="128"/>
         <image name="plus.rectangle.on.rectangle" catalog="system" width="128" height="96"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
     </resources>

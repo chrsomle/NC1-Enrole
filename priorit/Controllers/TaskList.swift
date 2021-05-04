@@ -68,7 +68,6 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
     cell.addGestureRecognizer(gestures)
     cell.addGestureRecognizer(tap)
 
-    //    let alpha = 1.2 - (CGFloat(indexPath.row) / CGFloat(tasks.count))
     let modifier = CGFloat(indexPath.row) * 4
     cell.cellContent.backgroundColor = UIColor(hue: (42 + modifier/4)/360, saturation: (80 - modifier)/100, brightness: 100/100, alpha: 1)
 
@@ -101,7 +100,7 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
 
     if let indexPath = tableView.indexPathForRow(at: location) {
 
-      guard let cell = tableView.cellForRow(at: indexPath) else { return }
+      guard let cell = tableView.cellForRow(at: indexPath) as? TaskCell else { return }
 
       switch sender.state {
 
@@ -111,20 +110,25 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
             prevCell.contentView.frame.origin.x = 0
           }
         }
-        currCell = cell as? TaskCell
+        currCell = cell
         removeAction.frame = CGRect(x: cell.contentView.frame.width, y: 0, width: 96, height: 72)
       case .changed:
-        if translation.y > -8 && translation.y < 8 {
+        if translation.y > -6 && translation.y < 6 {
           cell.contentView.center = CGPoint(x: cell.contentView.center.x + translation.x, y: cell.contentView.center.y)
           sender.setTranslation(.zero, in: view)
 
+          removeAction.opacity = 0
+
           if translation.x < -4 {
             cell.layer.insertSublayer(removeAction, at: 0)
+            cell.completedImage.isUserInteractionEnabled = false
             UIView.animate(withDuration: 0.3) {
+              self.removeAction.opacity = 1
               cell.contentView.frame.origin.x = -108
               self.removeAction.frame.origin.x = cell.contentView.frame.width - 120
             }
           } else {
+            cell.completedImage.isUserInteractionEnabled = true
             UIView.animate(withDuration: 0.3) {
               cell.contentView.frame.origin.x = 0
             }
@@ -132,7 +136,7 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
         }
 
       case .ended:
-        self.prevCell = cell as? TaskCell
+        self.prevCell = cell
 
       default:
         break

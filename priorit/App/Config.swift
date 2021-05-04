@@ -1,8 +1,8 @@
 let intensity = [
-  "Near Zero",
-  "Very Low",
-  "Low",
-  "Medium",
-  "High",
   "Very High",
+  "High",
+  "Medium",
+  "Low",
+  "Very Low",
+  "Near Zero",
 ]
