@@ -8,6 +8,26 @@ class Main: UIViewController, TaskCellDelegate {
   let manager = TaskManager()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   lazy var priorityPicker = UIPickerView()
+  var prevCell: TaskCell?
+  var currCell: TaskCell?
+  var removeAction: CALayer = {
+    let textLayer: CATextLayer = {
+      let textLayer = CATextLayer()
+      textLayer.alignmentMode = .center
+      textLayer.fontSize = 17
+      textLayer.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+      textLayer.string = "Remove"
+      textLayer.foregroundColor = UIColor.white.cgColor
+      textLayer.contentsScale = UIScreen.main.scale
+      textLayer.frame = CGRect(x: 0, y: 26, width: 96, height: 72)
+      return textLayer
+    }()
+    let layer = CALayer()
+    layer.cornerRadius = 8
+    layer.backgroundColor = UIColor.systemRed.cgColor
+    layer.addSublayer(textLayer)
+    return layer
+  }()
 
   // Computed Properties
   var highestPriorityTask: Task? {
@@ -258,7 +278,7 @@ extension Main: UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSourc
   }
 }
 
-extension Main: UITableViewDelegate, UITableViewDataSource {
+extension Main: UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let count = tasks.count
     return count < 5 ? count : 4
@@ -275,16 +295,95 @@ extension Main: UITableViewDelegate, UITableViewDataSource {
     if task.completed { cell.completedImage.image = UIImage(systemName: "checkmark.seal.fill") }
     let modifier = CGFloat(indexPath.row) * 4
     cell.cellContent.backgroundColor = UIColor(hue: (42 + modifier/4)/360, saturation: (80 - modifier)/100, brightness: 100/100, alpha: 1)
+
+    // Trailing Swipe
+    let gestures = UIPanGestureRecognizer(target: self, action: #selector(handleGestures))
+    let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+    gestures.delegate = self
+    cell.addGestureRecognizer(gestures)
+    cell.addGestureRecognizer(tap)
+
     return cell
   }
 
   // Debugging Purpose – Remove Item
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//      let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
-//        self.manager.remove(tasks: [tasks[indexPath.row]])
-//        self.tasks = self.manager.fetch()
-//      }
-//      let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
-//      return UISwipeActionsConfiguration(actions: [removeAction])
-//    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+      let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
+        self.manager.remove(tasks: [tasks[indexPath.row]])
+        self.tasks = self.manager.fetch()
+      }
+      let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
+      return UISwipeActionsConfiguration(actions: [removeAction])
+    }
+
+  @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    let location = sender.location(in: currCell)
+    if let currCell = currCell {
+      if removeAction.frame.contains(location) {
+        if let index = tasksTable.indexPath(for: currCell) {
+          UIView.animate(withDuration: 0.5) {
+            currCell.contentView.frame.origin.x += currCell.contentView.frame.origin.x
+          }
+          removeAction.removeFromSuperlayer()
+          DispatchQueue.main.async {
+            self.tasksTable.deleteRows(at: [index], with: .right)
+          }
+          manager.remove(tasks: [tasks[index.row]])
+          tasks = manager.fetch()
+        }
+      }
+    }
+  }
+
+  @objc func handleGestures(_ sender: UIPanGestureRecognizer) {
+
+    let location = sender.location(in: tasksTable)
+    let translation = sender.translation(in: view)
+
+    if let indexPath = tasksTable.indexPathForRow(at: location) {
+
+      guard let cell = tasksTable.cellForRow(at: indexPath) as? TaskCell else { return }
+
+      switch sender.state {
+
+      case .began:
+        if let prevCell = prevCell, cell != prevCell {
+          UIView.animate(withDuration: 0.3) {
+            prevCell.contentView.frame.origin.x = 0
+          }
+        }
+        currCell = cell
+        removeAction.frame = CGRect(x: cell.contentView.frame.width, y: 0, width: 96, height: 72)
+      case .changed:
+        if translation.y > -6 && translation.y < 6 {
+          cell.contentView.center = CGPoint(x: cell.contentView.center.x + translation.x, y: cell.contentView.center.y)
+          sender.setTranslation(.zero, in: view)
+
+          removeAction.opacity = 0
+
+          if translation.x < -4 {
+            cell.layer.insertSublayer(removeAction, at: 0)
+            cell.completedImage.isUserInteractionEnabled = false
+            UIView.animate(withDuration: 0.3) {
+              self.removeAction.opacity = 1
+              cell.contentView.frame.origin.x = -108
+              self.removeAction.frame.origin.x = cell.contentView.frame.width - 96
+            }
+          } else {
+            cell.completedImage.isUserInteractionEnabled = true
+            UIView.animate(withDuration: 0.3) {
+              cell.contentView.frame.origin.x = 0
+            }
+          }
+        }
+
+      case .ended:
+        self.prevCell = cell
+
+      default:
+        break
+      }
+
+    }
+  }
 }

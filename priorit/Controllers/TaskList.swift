@@ -27,14 +27,17 @@ class TaskList: UIViewController, TaskCellDelegate {
     textLayer.frame = CGRect(x: 0, y: 26, width: 96, height: 72)
     return textLayer
   }()
-  var removeAction = CALayer()
+  var removeAction: CALayer = {
+    let layer = CALayer()
+    layer.cornerRadius = 8
+    layer.backgroundColor = UIColor.systemRed.cgColor
+    return layer
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     tasks = manager.fetch()
     tableView.tableFooterView = UIView(frame: .zero)
-    removeAction.cornerRadius = 8
-    removeAction.backgroundColor = UIColor.systemRed.cgColor
     setupTextLayer()
   }
 
