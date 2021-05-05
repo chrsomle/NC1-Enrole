@@ -85,9 +85,6 @@ extension TaskList: UITableViewDelegate, UITableViewDataSource {
     if let currCell = currCell {
       if removeAction.frame.contains(location) {
         if let index = tableView.indexPath(for: currCell) {
-          UIView.animate(withDuration: 0.5) {
-            currCell.contentView.frame.origin.x += currCell.contentView.frame.origin.x
-          }
           removeAction.removeFromSuperlayer()
           DispatchQueue.main.async {
             self.tableView.deleteRows(at: [index], with: .right)

@@ -8,6 +8,8 @@ class Main: UIViewController, TaskCellDelegate {
   let manager = TaskManager()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   lazy var priorityPicker = UIPickerView()
+
+  // Trailling Swipe
   var prevCell: TaskCell?
   var currCell: TaskCell?
   var removeAction: CALayer = {
@@ -49,6 +51,7 @@ class Main: UIViewController, TaskCellDelegate {
 
     }
   }
+
   var tasks = [Task]() {
     didSet {
       if tasks.count > 0 {
@@ -200,14 +203,17 @@ class Main: UIViewController, TaskCellDelegate {
 
     // Add Underline Style Attribute.
     attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range:
-        NSRange.init(location: 0, length: attributedString.length));
+                                    NSRange.init(location: 0, length: attributedString.length));
     seeMoreButton.setAttributedTitle(attributedString, for: .normal)
+    titleTextField.layer.borderWidth = 1
+    titleTextField.layer.cornerRadius = 8
+    titleTextField.layer.borderColor = #colorLiteral(red: 0.8798526979, green: 0.88, blue: 0.8798332808, alpha: 1)
   }
 
   // MARK: - Actions
   @IBAction func addTaskTapped(_ sender: Any) {
     if let title = titleTextField.text,
-       title.count > 0,
+       title.count > 0, title.count < 24,
        let effort = priorities[0].text,
        let confidence = priorities[1].text,
        let impact = priorities[2].text {
@@ -227,9 +233,11 @@ class Main: UIViewController, TaskCellDelegate {
         priorities.forEach { $0.resignFirstResponder() }
       }
     } else {
-      let alert = UIAlertController(title: "Alert", message: "Please provide a name for the task.", preferredStyle: .alert)
+      let alert = UIAlertController(title: "Alert", message: (titleTextField.text?.count ?? 0) >= 24 ? "Please provide title with no more than 24 characters." : "Please provide a name for the task.", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in self.dismiss(animated: true) }))
-      self.present(alert, animated: true)
+      self.present(alert, animated: true) {
+        self.titleTextField.text = ""
+      }
     }
   }
 
@@ -307,27 +315,21 @@ extension Main: UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerD
   }
 
   // Debugging Purpose – Remove Item
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-      let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
-        self.manager.remove(tasks: [tasks[indexPath.row]])
-        self.tasks = self.manager.fetch()
-      }
-      let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
-      return UISwipeActionsConfiguration(actions: [removeAction])
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let removeActionHandler = { [self] (action: UIContextualAction, view: UIView, completion: @escaping (Bool) -> Void) in
+      self.manager.remove(tasks: [tasks[indexPath.row]])
+      self.tasks = self.manager.fetch()
     }
+    let removeAction = UIContextualAction(style: .destructive, title: "Remove", handler: removeActionHandler)
+    return UISwipeActionsConfiguration(actions: [removeAction])
+  }
 
   @objc func handleTap(_ sender: UITapGestureRecognizer) {
     let location = sender.location(in: currCell)
     if let currCell = currCell {
       if removeAction.frame.contains(location) {
         if let index = tasksTable.indexPath(for: currCell) {
-          UIView.animate(withDuration: 0.5) {
-            currCell.contentView.frame.origin.x += currCell.contentView.frame.origin.x
-          }
           removeAction.removeFromSuperlayer()
-          DispatchQueue.main.async {
-            self.tasksTable.deleteRows(at: [index], with: .right)
-          }
           manager.remove(tasks: [tasks[index.row]])
           tasks = manager.fetch()
         }
