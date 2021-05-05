@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8338A540264254BC0033203F /* PopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338A53F264254BC0033203F /* PopUp.swift */; };
+		8338A54226425E290033203F /* Info.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8338A54126425E290033203F /* Info.xib */; };
+		8338A54426426B070033203F /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338A54326426B070033203F /* Info.swift */; };
 		833F93F92637E36E007CB470 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F93F82637E36E007CB470 /* AppDelegate.swift */; };
 		833F93FB2637E36E007CB470 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F93FA2637E36E007CB470 /* SceneDelegate.swift */; };
 		833F93FD2637E36E007CB470 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833F93FC2637E36E007CB470 /* Main.swift */; };
@@ -14,7 +17,6 @@
 		833F94032637E36E007CB470 /* priorit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 833F94012637E36E007CB470 /* priorit.xcdatamodeld */; };
 		833F94052637E36F007CB470 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 833F94042637E36F007CB470 /* Assets.xcassets */; };
 		833F94082637E36F007CB470 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 833F94062637E36F007CB470 /* LaunchScreen.storyboard */; };
-		833FDB8E263E85A1009E7390 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833FDB8D263E85A1009E7390 /* Info.swift */; };
 		834CAD97263C875400D0835B /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAD96263C875400D0835B /* TaskCell.swift */; };
 		8361A00026394D5B00EB5874 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83619FFF26394D5B00EB5874 /* Extensions.swift */; };
 		83A27F6F263BFB91000867EB /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A27F6E263BFB91000867EB /* TaskManager.swift */; };
@@ -24,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8338A53F264254BC0033203F /* PopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUp.swift; sourceTree = "<group>"; };
+		8338A54126425E290033203F /* Info.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Info.xib; sourceTree = "<group>"; };
+		8338A54326426B070033203F /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		833F93F52637E36E007CB470 /* priorit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = priorit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		833F93F82637E36E007CB470 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		833F93FA2637E36E007CB470 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +38,6 @@
 		833F94042637E36F007CB470 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		833F94072637E36F007CB470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		833F94092637E36F007CB470 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		833FDB8D263E85A1009E7390 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		834CAD96263C875400D0835B /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		83619FFF26394D5B00EB5874 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		83A27F6E263BFB91000867EB /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
@@ -58,6 +62,7 @@
 			children = (
 				833F93FE2637E36E007CB470 /* Main.storyboard */,
 				833F94062637E36F007CB470 /* LaunchScreen.storyboard */,
+				8338A54126425E290033203F /* Info.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -69,7 +74,8 @@
 				834CAD96263C875400D0835B /* TaskCell.swift */,
 				83A27F6E263BFB91000867EB /* TaskManager.swift */,
 				83D91F38263DC690009B19E3 /* TaskList.swift */,
-				833FDB8D263E85A1009E7390 /* Info.swift */,
+				8338A53F264254BC0033203F /* PopUp.swift */,
+				8338A54326426B070033203F /* Info.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -181,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				833F94082637E36F007CB470 /* LaunchScreen.storyboard in Resources */,
+				8338A54226425E290033203F /* Info.xib in Resources */,
 				833F94052637E36F007CB470 /* Assets.xcassets in Resources */,
 				833F94002637E36E007CB470 /* Main.storyboard in Resources */,
 			);
@@ -202,8 +209,9 @@
 				83D91F39263DC690009B19E3 /* TaskList.swift in Sources */,
 				83A27F6F263BFB91000867EB /* TaskManager.swift in Sources */,
 				834CAD97263C875400D0835B /* TaskCell.swift in Sources */,
+				8338A54426426B070033203F /* Info.swift in Sources */,
 				83B937F1263AD31B00B26E80 /* Config.swift in Sources */,
-				833FDB8E263E85A1009E7390 /* Info.swift in Sources */,
+				8338A540264254BC0033203F /* PopUp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

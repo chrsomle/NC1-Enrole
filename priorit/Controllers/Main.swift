@@ -218,6 +218,9 @@ class Main: UIViewController, TaskCellDelegate {
     self.present(taskList, animated: true)
   }
 
+  @IBAction func seeInfo(_ sender: Any) {
+    self.view.addSubview(PopUp())
+  }
 }
 
 // MARK: - Extension

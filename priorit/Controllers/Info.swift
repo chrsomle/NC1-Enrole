@@ -2,28 +2,28 @@
 //  Info.swift
 //  priorit
 //
-//  Created by Christianto Budisaputra on 02/05/21.
+//  Created by Christianto Budisaputra on 05/05/21.
 //
 
 import UIKit
 
-class Info: UIViewController {
+class Info: UIView {
 
-  @IBOutlet weak var contentView: UIStackView!
   @IBOutlet var cards: [UIStackView]!
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+  }
 
-    contentView.layer.cornerRadius = 12
-    cards.forEach {
-      $0.layer.cornerRadius = 8
-      $0.backgroundColor = UIColor.Palette.primary
-    }
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
   }
 
   @IBAction func dismiss(_ sender: Any) {
-    self.dismiss(animated: true)
+    UIView.animate(withDuration: 0.3) {
+      self.superview?.alpha = 0
+    } completion: { _ in
+      self.superview?.removeFromSuperview()
+    }
   }
-
 }

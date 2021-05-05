@@ -16,7 +16,17 @@ class TaskList: UIViewController, TaskCellDelegate {
 
   var prevCell: TaskCell?
   var currCell: TaskCell?
-  let textLayer = CATextLayer()
+  let textLayer: CATextLayer = {
+    let textLayer = CATextLayer()
+    textLayer.alignmentMode = .center
+    textLayer.fontSize = 17
+    textLayer.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+    textLayer.string = "Remove"
+    textLayer.foregroundColor = UIColor.white.cgColor
+    textLayer.contentsScale = UIScreen.main.scale
+    textLayer.frame = CGRect(x: 0, y: 26, width: 96, height: 72)
+    return textLayer
+  }()
   var removeAction = CALayer()
 
   override func viewDidLoad() {
@@ -33,13 +43,6 @@ class TaskList: UIViewController, TaskCellDelegate {
   }
 
   func setupTextLayer() {
-    textLayer.alignmentMode = .center
-    textLayer.fontSize = 17
-    textLayer.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-    textLayer.string = "Remove"
-    textLayer.foregroundColor = UIColor.white.cgColor
-    textLayer.contentsScale = UIScreen.main.scale
-    textLayer.frame = CGRect(x: 0, y: 26, width: 96, height: 72)
     removeAction.addSublayer(textLayer)
   }
 
